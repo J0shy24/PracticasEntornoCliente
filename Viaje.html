@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Datos del Cliente</h1>
+
+    <form>
+        <label for="ori">Origen :</label><select id="ori"> 
+            <option value="Madrid">Madrid</option>
+        </select>
+        <br>
+        <label for="dst">Destino :</label><select id="dst"> 
+            <option value="Roma">Roma</option>
+            <option value="Londres">Londres</option>
+            <option value="Barcelona">Barcelona</option>
+        </select>
+        <br>
+        <label for="days">Días :</label><input type="number" id="days">
+        <br>
+        <input type="button" onclick="calcular()" value="Calcular">
+
+        <h1>Resultado</h1>
+        <label for="price">Precio :</label><input type="text" id="price">€
+        <br>
+        <label for="info">Resumen : </label>
+        <textarea id="info" style="width:300px;height: 100px;"></textarea>
+    </form>
+    <script language="javascript">
+        //Tablas de Ciudades
+       
+        //Form Relleno
+        let forigen=document.getElementById("ori");
+        let fdestino=document.getElementById("dst");
+        let fdias=document.getElementById("days");
+        let fprice=document.getElementById("price");
+        let tinfor=document.getElementById("info");
+        let tDestino=new Map([["Roma",275],["Londres",350],["Barcelona",150]]);
+        //Procesar
+       let calcular=()=>{
+            let torigen=forigen.value;
+            let tdest=fdestino.value;
+            let tdias=fdias.value;
+            let pprecio=tDestino.get(tdest);
+            let tprecio=pprecio*tdias;
+            
+        class viaje{
+            constructor(origen,destino,dia){
+                this.origen=origen,
+                this.destino=destino,
+                this.numEstancia=dia
+            }
+            informe(){
+                tinfor.value=`
+                Origen: ${this.origen}  
+                Destino: ${this.destino}  
+                Días de Estancia: ${this.numEstancia} 
+                Precio Total: ${tprecio}  `;
+
+                fprice.value=tprecio;
+            }
+        }
+        let nviaje=new viaje(torigen,tdest,tdias);
+        nviaje.informe();
+    }
+   /* class viaje{
+        contructor(origen,destino,dia){
+            this.origen=origen;
+            this.destino=destino,
+            this.numDias=dia
+            this.ppd=tDestino.get(this.destino),
+            this.tprecio=this.ppd*this.numDias
+        }
+        informe(){
+            document.getElementById("info").value=`Origen: ${this.origen} /n Destino: ${this.destino} /n Días de Estancia: ${this.numDias} /n
+                Precio Total: ${this.tprecio} `;
+        }
+    }
+    
+    function calcular(){
+        let nviaje=viaje(forigen.value,)
+    }*/
+    </script>
+</body>
+</html>

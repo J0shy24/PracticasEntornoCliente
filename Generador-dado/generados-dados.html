@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dado-Imagen javascript</title>
+        <style>
+            
+        </style>
+    </head>
+    <body>
+        <script language="JavaScript">
+            //Cargar Imagenes
+            var cara1=new Image();
+            cara1.src="d1.gif";
+            var cara2=new Image();
+            cara2.src="d2.gif";
+            var cara3=new Image();
+            cara3.src="d3.gif";
+            var cara4=new Image();
+            cara4.src="d4.gif";
+            var cara5=new Image();
+            cara5.src="d5.gif";
+            var cara6=new Image();
+            cara6.src="d6.gif";
+        </script>
+        <header><h1>Juego de dados</h1></header>
+        <main>
+            <p>Hola, soy un simulador de dados!</p>
+            <section>
+                <input type="button" value="Lanzar" onclick="lanzarDado()">
+                <br>
+                <input type="text" id="numeroDado">
+                <br>
+                <img src="d1.gif" id="imgDado">
+            </section>
+        </main>
+        <script language="JavaScript">
+            function lanzarDado(){
+                let ranD=Math.floor(Math.random()*6)+1;
+                document.getElementById("numeroDado").value=ranD;
+                document.getElementById("imgDado").src=eval("cara"+ranD+".src");
+            }
+
+        </script>
+    </body>
+</html>
