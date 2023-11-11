@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html Ñlang="es">
+    <head>
+        <title>Ensaño Examen JavaScript</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <h1>Form de personas</h1>
+        <form> 
+            <label for="idusuario">Usuario</label>
+            <input type="text" id="idusuario" name=""><br>
+
+            <label for="idcontrasena">Contraseña</label>
+            <input type="" id="idcontrasena" name=""><br>
+
+            <label for="idnombre">Nombre</label>
+            <input type="text" id="idnombre" name=""><br>
+
+            <label>Genero:</label>
+            <input type="radio" name="genero" value="hombre" id="idgenero1"><label for="idgenero1" >Hombre</label>
+            <input type="radio" name="genero" value="mujer" id="idgenero2"><label for="idgenero1">Mujer</label><br>
+
+            <label>Fecha de Nacimiento:</label>
+            <input type="number" id="idano" name="fnac" placeholder="año">
+            <input type="number" placeholder="mes" id="idmes" name="fnac">
+            <input  id="iddia" type="number"  placeholder="día" name="fnac"><br>
+
+            <input type="button" value="anadir" onclick="accion(this.value)">
+            <input type="button" value="eliminar" onclick="accion(this.value)">
+            <input type="button" value="login" onclick="accion(this.value)"><br>
+            <input type="text" id="idbuscar" name="" placeholder="Buscar Usuario"><input type="button" value="buscar" onclick="accion(this.value)"><br>
+            <textarea id="informe" style="width:500px;height: 300px;"></textarea>
+        </form>
+
+        <script language="javaScript">
+            //Elementos del form
+            var fusuario=document.getElementById("idusuario");
+            var fcontrasena=document.getElementById("idcontrasena")
+            var fnombre=document.getElementById("idnombre");
+            var fgenero=document.getElementsByName("genero");
+            var ffnac=document.getElementsByName("fnac");
+            var fbuscar=document.getElementById("idbuscar");
+            var finforme=document.getElementById("informe");
+
+            //clase usuario
+            class usuario{
+                constructor(usuario,contrasena,nombre,genero,edad){
+                    this.usuario=usuario;
+                    this.contrasena=contrasena;
+                    this.nombre=nombre;
+                    this.genero=genero;
+                    this.edad=edad;
+                }
+
+                toString(){
+                    return `Hola ${this.nombre}, eres un ${this.genero} y este año tendrás ${this.edad} años`;
+                }
+            }
+            //Set de Usuario
+            var usuArray=new Array();
+            var usuMap=new Map();
+
+            //Funciones Principales
+            function accion(ac){
+                switch(ac){
+                    case "login": login();
+                        break;
+                    case "anadir": anadir();
+                        break;
+                    case "eliminar": eliminar();
+                        break;
+                    case "buscar": buscar();
+                        break;
+                }
+            }
+           
+            function anadir(){
+                let tusuario=fusuario.value;
+                let tcontrasena=fcontrasena.value;
+                let tnombre=fnombre.value;
+                let tgenero=getGenero();
+                let tedad=getEdad();
+
+                if (existeUsuario()){
+                    alert("Ya existe el usuario");
+                }else{
+                let newuser=new usuario(tusuario,tcontrasena,tnombre,tgenero,tedad);
+                usuArray.push(newuser);
+                usuMap.set(newuser.usuario,newuser.contrasena);
+                    }
+                limpiar();
+            }
+
+            function eliminar(){
+                for(let i in usuArray){
+                    if(usuArray[i].usuario==fbuscar.value){
+                        usuArray.splice(i,1);
+                        usuMap.delete(fbuscar.value);
+                    }
+                    limpiar();
+                }
+            }
+
+            function buscar(){
+                for (let i in usuArray){
+                    if (fbuscar.value==usuArray[i].usuario){
+                        finforme.value=usuArray[i].toString();
+                        break;
+                    }
+                }
+                limpiar();
+                
+            }
+
+            function login(){
+                let userLogin=fusuario.value;
+                let passLogin=fcontrasena.value;
+
+                for (let [user,password] of usuMap.entries()){
+                    if (userLogin===user && passLogin===password){
+                        alert("Iniciado la session correctamente");
+                        break;
+                    }else {
+                        alert("Error de credenciales");
+                        break;
+                    }
+                } 
+                limpiar();
+            }
+            
+            //funciones Secundarios
+            function getGenero(){
+                    for (let i=0;i<fgenero.length;i++){
+                        if(fgenero[i].checked){
+                            return fgenero[i].value;
+                        }
+                    }
+            }
+            function getEdad(){
+                let tano=ffnac[0].value;
+                let tmes=ffnac[1].value;
+                let tdia=ffnac[2].value;
+                let fechanac=new Date(tano,tmes,tdia);
+                let fechaActual=new Date();
+                return fechaActual.getFullYear()-fechanac.getFullYear();
+            }
+            function limpiar(){
+                fusuario.value="";
+                fcontrasena.value="";
+                fnombre.value="";
+                fgenero[0].checked=false;
+                fgenero[1].checked=false;
+                for (let i=0;i<ffnac.length;i++){
+                   let datos=ffnac[i];
+                   datos.value="";
+                }
+            }
+
+            function existeUsuario(){
+                let usu=false;
+                let usuarioComprobar=fusuario.value;
+                 for(let i in usuArray){
+                    if(usuArray[i].usuario==usuarioComprobar){
+                        usu=true;
+                    }
+                 }
+                 return usu;
+            }
+        </script>
+    </body>
+</html>

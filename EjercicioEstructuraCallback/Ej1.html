@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio1</title>
+</head>
+<body>
+    <form>
+        <label>Introducir Numero :</label><input type="number" id="num"> <input type="button" value="anadir" onclick="accion(this.value)">
+        <br>
+        <label>Cantidad de numeros que puedas Introducir :</label><input type="text" id="contador">
+        <br>
+        <label>Numeros Pares:</label>
+        <textarea></textarea>
+        <br>
+        <label>Numeros Impares:</label>
+        <textarea></textarea>
+        <br>
+        <input type="button" value="visualizar" onclick="accion(this.value)">
+    </form>
+    <script language="javaScript">
+        //Set para numeros
+        let arrNumeros=new Set();
+    
+        //variables form
+        let fnum=document.getElementById('num');
+        let fcont=document.getElementById('contador');
+    
+        //funciones
+      
+        function esPar(num){
+            let resu=false;
+            if (num%2==0){
+                resu=true;
+            }
+            return resu;
+        }
+        function visualizar(cb){
+            if(arrNumeros.size!=10){
+                alert("Debes haber introducir 10 numeros");
+            }else {
+                let It=arrNumeros.values();
+                let i=0;
+                while(i<arrNumeros.size){
+                    numero=It.next().value;
+                    console.log(numero);
+                    if(cb(numero)){
+                        document.getElementsByTagName("textarea")[0].value+=numero+", ";
+                    }else {
+                        document.getElementsByTagName("textarea")[1].value+=numero+", ";
+                    }
+                    i++;
+                }
+            }
+        }
+    
+        function anadir(){
+            if (arrNumeros.size==10){
+                alert("Ya tienes 10 numeros!");
+            }else {
+            arrNumeros.add(fnum.value);
+            }
+            fcont.value=10-arrNumeros.size;  
+        }
+        function limpiar(){
+            fnum.value="";
+        }
+
+        function accion(val){
+            switch (val){
+                case "anadir" : anadir(); break;
+                case "visualizar": visualizar(esPar); break;
+            }
+            limpiar();
+        }
+    </script>
+</body>
+
+</html>
