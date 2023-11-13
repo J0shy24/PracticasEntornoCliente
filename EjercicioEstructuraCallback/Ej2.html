@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio2</title>
+</head>
+<body>
+    <textarea style="resize: none;" cols="80" rows="20" id="texto"></textarea>
+    <br>
+    <input type="button" id="visualizar" onclick="visualizar()" value="visualizar">
+
+    <script>
+        //forma variable
+        let ftexto=document.getElementById("texto");
+        //Rellenar Lista
+        let arrNum=new Array(500).fill(0).map((_,i) => i);
+        console.log(arrNum);
+        let arrPrimos=arrNum.filter(esPrimo);
+        console.log(arrPrimos);
+
+        const col=15;
+        function visualizar(){
+            arrPrimos.forEach(mostrar);
+        }
+
+        function mostrar(num,salto){
+            ftexto.value+=num+" ";
+
+            salto+=1;
+            if(salto%col==0&&salto>0){
+                ftexto.value+="\n";
+            }
+        }
+        function esPrimo(num){
+            if (num<2){
+                return false;
+            }
+
+            for (let i=2;i<num;i++){
+                if (num%i===0){
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>
