@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hexgen</title>
+</head>
+<body>
+    <input type="text" id="regex"/>
+    <div id="color"></div>
+    <script>
+        setInterval(cambio,500);
+        function cambio(){
+            let regex=/^#[0-9A-F]{6}$/g;
+            let ranex=new RandExp(regex);
+            document.getElementById("color").style.backgroundColor=ranex
+            document.getElementById("text").value=ranex;
+        }
+    </script>
+</body>
+</html>

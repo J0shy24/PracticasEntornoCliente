@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repeticiones de palabras</title>
+</head>
+<body>
+    <form action="" name="f0">
+        <h3>INTRODUZCA UN MÍNIMO DE 12 PALABRAS A TRAVÉS DE LA SIGUIENTE CAJA</h3><BR><BR>
+            <label for="">PALABRAS</label><input type="text" name="palabras"><br><br>
+            <input type="button" value="AÑADIR" onclick="anadir()"><p>   </p><input type="button" value="ESTADÍSTICA" onclick="estadistica()"><br><br>
+        <h3>VISUALIZACIÓN DE LA ESTADÍSTICA DE LAS PALABRAS</h3><BR><BR>
+            <textarea cols="30" rows="10"></textarea>
+    </form>
+   <script>
+    //variables 
+    let fpalabras=document.getElementsByName('palabras')[0];
+    let arrPalabras=new Array();
+
+    document.getElementsByTagName("input")[2].disabled = true; 
+   
+    //funciones
+    function anadir(){
+       if(arrPalabras.length==12){
+        document.getElementsByTagName("input")[2].disabled = false;
+       } 
+       let palabra=fpalabras.value;
+       if(palabra=='fin'||palabra=='FIN'||palabra=='Fin'){
+        document.getElementsByTagName("input")[1].disabled = true; 
+        return;
+       }
+
+       arrPalabras.push(palabra);
+       console.log(arrPalabras);
+    }
+
+    function estadistica(){
+        let pMap=contarPalabras(arrPalabras);
+        console.log(pMap);
+        let msj="";
+        let ftext=document.getElementsByTagName("textarea")[0];
+
+        for(let [word,count] of pMap){
+            msj+=word+" "+count +"\n"
+        }
+
+        ftext.value=msj;
+    }
+
+    //Hace un forloop de las palabras y le mete en un Map
+    function contarPalabras(arr){
+        let wMap=new Map();
+        let keyArr=wMap.keys;
+        for(let i=0;i<arr.length;i++){
+
+            let palabra=arr[i];
+            let cont=0;
+            for(let y=0;y<arr.length;y++){
+                let palabraComparar=arr[y];
+                if(palabra==palabraComparar){
+                    cont++;
+                }
+            }
+            wMap.set(palabra,cont);
+        }
+
+        return wMap;
+    }
+   </script>
+</body>
+</html>

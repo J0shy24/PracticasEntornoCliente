@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Reloj JS</title>
+
+		<style type="text/css">
+			body{
+				text-align: center;
+				font-size: 150px;
+				background-color: black;
+				color: white;
+			}
+
+			#hora, #minutos, #segundos{
+				border-radius: 50%;
+				height: 200px;
+				width: 200px;
+				font-size: 100px;
+				text-align: center;
+				color: black;
+				background-color: white
+			}
+
+			#dia, #mes, #ano{
+				height: 100px;
+				width: 110px;
+				font-size: 50px;
+				text-align: center;
+				color: black;
+				background-color: white
+
+			}
+
+		</style>
+	</head>
+
+	<body>
+		RELOJ
+		<form name="form_reloj"> 
+			<input type="text"  id='hora'/> :
+			<input type="text"  id='minutos'/> :
+			<input type="text"  id='segundos'/>
+
+			<br>
+
+			<input type="text" name="dia" id="dia"/> /
+			<input type="text" name="mes" id="mes"/> /
+			<input type="text" name="ano" id="ano"/>
+		</form>
+	</body>
+	<script>
+		let fechaActual=new Date();
+		console.log(fechaActual.getDate());
+		let fhora=document.getElementsByTagName("input")[0];
+		let fminutos=document.getElementsByTagName("input")[1];
+		let fsegundos=document.getElementsByTagName("input")[2];
+		let fdia=document.getElementsByTagName("input")[3];
+		let fmes=document.getElementsByTagName("input")[4];
+		let fano=document.getElementsByTagName("input")[5];
+
+		fhora.value=fechaActual.getHours();
+		fminutos.value=fechaActual.getMinutes();
+		fsegundos.value=parseInt(fechaActual.getSeconds());
+		fdia.value=fechaActual.getDate();
+		fmes.value=fechaActual.getMonth()+1;
+		fano.value=fechaActual.getFullYear();
+		setInterval(segundos,1000);
+		
+		//Arrays con los meses con dias 31 y 30
+		let mes31=[1,3,5,7,8,10,12];
+		let mes30=[4,6,9,11]
+
+		
+
+		function segundos(){
+			tseg=parseInt(fsegundos.value);
+			tseg++;
+			if(fsegundos.value>59){
+			tseg=1;
+			fminutos.value++;
+			}
+
+			if(fminutos.value>59){
+			fminutos.value=1;
+			fhora.value++;
+			}
+
+			if (fhora.value>23){
+			fhora.value=00;
+			fdia.value++;
+			}
+
+			if(fdia.value==30&&mes30.includes(fmes.value)){
+				fdia.value=1;
+				fmes.value++;
+			}
+
+			if(fdia.value==31&&mes31.includes(fmes.value)){
+				fdia.value=1;
+				fmes.value++;
+			}
+			if(fdia.value==28&&fmes.value==2&&fano.value%4!=0&&fano.value%100==0){
+				fdia.value=1;
+				fmes.value++;
+			}
+
+			if(fdia.value==29&&fmes.value==2&&fano.value%4==0&&fano.value%100!=0){
+				fdia.value=1;
+				fmes.value++;
+			}
+
+			if(fmes.value>12){
+				fmes.value=1;
+				fano.value++;
+			}
+
+			fsegundos.value=tseg;
+
+		}
+	</script>
+</html>

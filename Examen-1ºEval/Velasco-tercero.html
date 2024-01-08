@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html><head><title>Controlando elementos de un formulario</title><meta charset="utf-8">
+<style type="text/css"> body {margin-left:30px; font-family: sans-serif;} h4 {margin:0;} div {float:left;}
+.estiloForm, #encuadraImagen, #datos {background-color: #f3f3f3; border: solid 2px black; margin-left:10px; width:300px; }
+.estiloForm { width: 330px; padding:10px;} #datos {margin-top: 20px; height:226px; padding:10px;}
+#encuadraImagen {width:100px; height:100px;   text-align:center;}
+.estiloForm label {display: block; width: 120px; float: left; text-align:right; margin-bottom: 35px; padding-right: 20px;}
+br {clear: left;} input[type="submit"], input[type="reset"] {margin:25px 5px 10px 5px;}
+</style>
+
+</head>
+<body><h2>Controlando Elementos</h2><h3>Examen JavaScript</h3>
+    <div class="estiloForm">
+    <form name ="formularioContacto" method="get" action="#">
+        <label>Tratamiento</label>
+        <input type="radio" name="tratamiento" id="tratarSr" value="Sr."/>Sr.
+        <input type="radio" name="tratamiento" id ="tratarSra" value="Sra."/>Sra.<br/>
+        <label>Nombre</label><input id="nombre" name="nombre" type="text"/><br/>
+        <label>Apellidos</label><input id="apellidos" name="apellidos" type="text"/><br/>
+        <label>Direccion</label><input id="direccion1" name="direccion1" type="text"/><br/>
+        <label>Ciudad</label><select id="ciudad" name="ciudad">
+            <option value="">Elija opcion</option>
+            <option value="Madrid">Madrid (ES)</option>
+            <option value="Berlin">Berlin (D)</option>
+            <option value="Paris">Paris (F)</option>
+        </select><br/>
+        <label>Preferencias</label><input name="Libros" id ='libros' type="checkbox" value='Libros'/>Libros
+        <input name="Peliculas"  id='peliculas' type="checkbox" value='Peliculas'/>Peliculas
+        <input type="button" value="Enviar" onclick="enviar()"/> <input type="reset" value="Cancelar" onclick="cancelar()"/>
+    </div>
+    <div style="float:left;">
+    <div id="encuadraImagen"><img id='rostro' src='lol.jpg' alt="?" width="110" height="110"></div><br/>
+    <div id="datos" style="float:left;"><h4> Datos introducidos: </h4><textarea id='datosfinales' cols='35' rows='12'></textarea></div>
+    </form>
+    </div>
+    <script>
+    //variables del formulario
+    let fnombre=document.getElementById("nombre");
+    let fgenero1=document.getElementsByName("tratamiento")[0];
+    let fgenero2=document.getElementsByName("tratamiento")[1];
+    let fapellidos=document.getElementById("apellidos");
+    let fdir=document.getElementById("direccion1");
+    let fciudad=document.getElementById("ciudad");
+    let flibro=document.getElementById("libros");
+    let fpelicula=document.getElementById("peliculas");
+    let fimagen=document.getElementById("rostro");
+    
+
+    function enviar(){
+        let perfil=crearObjeto();
+
+        perfil.visualizar();
+    }
+    
+    function crearObjeto(){
+        let msj="";
+        let tnombre=fnombre.value;
+        let tgenero;
+        if(fgenero1.checked){
+            tgenero=fgenero1.value;
+        }else if(fgenero2.checked){
+            tgenero=fgenero2.value;
+        }else{
+            alert("No has seleccionado como quieres ser tratada");
+        }
+        let tapellido=fapellidos.value;
+        let tdir=fdir.value;
+        let tciudad=fciudad.value;
+        let tpreferencias=[];
+        if(flibro.checked){
+            tpreferencias.push(flibro.value);
+        }
+        if(fpelicula.checked){
+            tpreferencias.push(fpelicula.value);
+        }
+        let tdatos=document.getElementById("datosfinales");
+        for(let pref of tpreferencias){
+            msj+="  "+pref+"\n";
+        }
+        let persona={
+            Nombre:tnombre,
+            Apellidos:tapellido,
+            Direccion:tdir,
+            Ciudad:tciudad,
+            Preferencias:msj,
+
+            visualizar:function(){
+                fimagen.src=tgenero+"jpg";
+                tdatos.value=`Nombre:    ${this.Nombre}\nApellidos:  ${this.Apellidos}\nDireccion:   ${this.Direccion}\nCiudad: ${this.Ciudad}\nPreferencias:${this.Preferencias}`;
+            }
+
+        }
+
+        return persona;
+        
+    }
+
+    function cancelar(){
+        fimagen.src="lol.jpg";
+    }
+    </script>
+</body>
+</html>

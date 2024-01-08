@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        Crear una pagina con un boton y una caja de texto.
+        Definir eventListener para el click del boton, controlar el evento 
+        readystateChange del objeto document. En la caja de texto se mostrará 
+        el numero de veces que se hace click sobre el botón.
+    -->
+
+    <input type="text" id="txt">
+    <input type="button" value="click me">
+
+    <script>
+        //Elementos
+        let ftext=document.getElementById("txt");
+        ftext.value=0;
+
+        function asignarEventos(evento){
+            if(document.readyState=="complete"){
+                let bot=document.getElementsByTagName("input")[1];
+                bot.addEventListener("click",()=>{ftext.value=parseInt(ftext.value)+1;},true)
+            }
+        }
+
+        document.addEventListener("readystatechange",asignarEventos,false);
+    </script>
+</body>
+</html>
