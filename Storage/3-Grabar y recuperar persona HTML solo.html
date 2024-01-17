@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grabar y Recuperar datos Persona</title>
+</head>
+<body>
+	Nombre:
+	<input type="text" id="nombre">
+	<br>
+	Apellidos:
+	<input type="text" id="apellidos">
+	<br>
+	Movil:
+	<input type="text" name="movil">
+	<br>
+	Provincia:
+	<input type="text" name="provincia">
+	<br>
+	<button id="guardar">Guardar</button>
+	<button id="recuperar">Recuperar</button>
+	<button id="borrarSesion">Borrar datos de sesion</button>
+	<button id="reset">Borrar campos</button>
+
+	<script>
+		//Variables de los elementos del documento
+		let fnombre=document.getElementById("nombre");
+		let fapellido=document.getElementById("apellidos");
+		let fmovil=document.getElementsByName("movil")[0];
+		let fprovincia=document.getElementsByName("provincia")[0];
+
+		//Variables elementos botones
+		let fguardar=document.getElementById("guardar");
+		let frecuperar=document.getElementById("recuperar");
+		let fborrarSesion=document.getElementById("borrarSesion");
+		let freset=document.getElementById("reset");
+
+
+		document.addEventListener("readystatechange",setEvents,true);
+
+		class Usuario{
+			constructor(nombre,apellido,movil,provincia){
+				this.nombre=nombre,
+				this.apellido=apellido,
+				this.movil=movil,
+				this.provincia=provincia
+			}
+		}
+		//Helper Functions
+		function limpiar(){
+			fnombre.value="";
+			fapellido.value="";
+			fmovil.value="";
+			fprovincia.value="";
+		}
+		//Ejercicio a 
+		function setEvents(){
+			if(document.readyState=="complete"){
+				fguardar.addEventListener("click",guardar,false);
+				frecuperar.addEventListener("click",recuperar,false);
+				fborrarSesion.addEventListener("click",borrarSesion,false);
+				freset.addEventListener("click",reset,false);
+			}
+		}
+		//Ejercicio b
+		function guardar(){
+			let user=new Usuario(fnombre.value,fapellido.value,fmovil.value,fprovincia.value);
+			localStorage.setItem(fmovil.value,JSON.stringify(user));
+			limpiar();
+		}
+
+		function recuperar(){
+			let user=JSON.parse(localStorage.getItem(fmovil.value));
+			fnombre.value=user.nombre;
+			fapellido.value=user.apellido;
+			fmovil.value=user.movil;
+			fprovincia.value=user.provincia;
+		}
+
+		function borrarSesion(){
+			localStorage.clear();
+			limpiar();
+		}
+
+		function reset(){
+			limpiar();
+		}
+	</script>
+</body>
+</html>

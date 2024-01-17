@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eje1</title>
+</head>
+<body>
+    <label>Nombre:</label><input type="text">
+    <br>
+    <label>Contraseña:</label><input type="text">
+    <p id="text"></p>
+    <script>
+        let nombre=document.getElementsByTagName("input")[0];
+        let contrasena=document.getElementsByTagName("input")[1];
+        let texto=document.getElementById("text");
+        document.addEventListener("readystatechange",asignarEventos,false);
+       
+        function asignarEventos(evento){
+            if(document.readyState=="complete"){
+                nombre.addEventListener("keydown",teclado,true);
+                contrasena.addEventListener("keydown",transmision,true);
+            }
+        }
+
+        function teclado(){
+            if(document.activeElement==nombre&&document.hasFocus()){
+                contrasena.focus();
+            }
+        }
+        function transmision(){
+            if(document.activeElement==contrasena&&document.hasFocus()){
+                texto.innerHTML="Iniciando transmision";
+            }
+        }
+        
+    </script>
+    
+</body>
+</html>
