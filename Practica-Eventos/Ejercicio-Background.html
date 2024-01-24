@@ -8,23 +8,26 @@
 </head>
 <body>
     <h1>Haz algo</h1>
-    <script>
-        let lista=["red","yellow","green",];
-        aleatorio=Math.floor(Math.random()*3);
-
-        function cambiar(e){
-            
-            if(e.altkey && e.key=="F12"){
-                alert("hola");
-                document.body.style.backgroundColor=`"${lista[aleatorio]}"`;
-                console.log(capa.style.backgroundImage);
-            }
-        }
-
-        function inicio(){
-            document.body.addEventListener("keyup",cambiar,false);
-        }
-        document.addEventListener("DOMContentLoaded",inicio,false);
-    </script>
+    
 </body>
+<script>
+    let lista=["red","yellow","green",];
+    aleatorio=Math.floor(Math.random()*3);
+
+   
+
+    function inicio(){
+        alert("loaded");
+        document.body.addEventListener("keyup",cambiar,true);
+    }
+    function cambiar(e){
+        
+        if(e.key=="f12"){
+            alert("hola");
+            document.body.style.backgroundColor=`"${lista[aleatorio]}"`;
+            console.log(capa.style.backgroundImage);
+        }
+    }
+    document.addEventListener("DOMContentLoaded",inicio,false);
+</script>
 </html>

@@ -47,4 +47,110 @@ CLAVES Y VALORES EN SESSION STORAGE:<br/>
 <p>Tambi&eacute;n puedes probar a abrir dos ventanas guardar valores con almacenamiento local en una de ellas y ver como aparecen en la otra.</p>
 
 </body>
+<script>
+    //variables elemento
+    let ftipo=document.getElementById("tipo");
+    let fclave=document.getElementById("clave");
+    let fvalor=document.getElementById("valor");
+    let bguardar=document.getElementsByTagName("button")[0];
+    let beliminar=document.getElementsByTagName("button")[1];
+    let brefrescar=document.getElementsByTagName("button")[2];
+    let bcomprobar=document.getElementsByTagName("button")[3];
+    let flocalstorage=document.getElementById("almacenamientoLocal");
+    let fsessionstorage=document.getElementById("almacenamientoSesion");
+
+    document.addEventListener("DOMContentLoaded",inicio,false);
+    
+ 
+
+    //metodos
+    function inicio(){
+        bguardar.addEventListener("click",guardar,true);
+        beliminar.addEventListener("click",eliminar,true);
+        brefrescar.addEventListener("click",refrescar,true);
+        bcomprobar.addEventListener("click",comprobar,true);
+        reloadContents();
+    }
+
+    function guardar(){
+        if(fclave.value==""||fvalor.value==""){
+            mostrarMensaje("Rellena los campos");
+            return false;
+        }
+
+        switch (ftipo.value) {
+            case "local":
+                localStorage.setItem(fclave.value,fvalor.value);
+                break;
+        
+            case "sesion":
+                sessionStorage.setItem(fclave.value,fvalor.value);
+                break;
+        }
+        mostrarMensaje(fclave.value + " = "+fvalor.value+" se ha almacenado correctamente en "+ftipo.value+ " storage");
+        reloadContents();
+        return true;
+    }
+
+    function eliminar(){
+        if(fclave.value==""){
+            mostrarMensaje("Rellena la clave para eliminar");
+            return false;
+        }
+
+        switch (ftipo.value) {
+            case "local":
+                localStorage.removeItem(fclave.value);
+                break;
+        
+            case "sesion":
+                sessionStorage.removeItem(fclave.value);
+                break;
+        }
+        mostrarMensaje(fclave.value + " Se ha eliminado correctamente del "+ftipo.value+" storage");
+        reloadContents();
+        return true;
+    }
+
+    function mostrarMensaje(message){
+        let msj=document.getElementById("mensajes");
+        msj.innerHTML=message;
+        window.setTimeout(()=>{msj.innerHTML=""},3000)
+    }
+
+    function reloadContents(){
+        limpiar();
+        if(localStorage.length!=0){
+        for(let i=0;i<localStorage.length;i++){
+            flocalstorage.value+=localStorage.key(i)+" = "+localStorage.getItem(localStorage.key(i)) + "\n";
+        }
+    }
+
+    if(sessionStorage.length!=0){
+        for(let i=0;i<sessionStorage.length;i++){
+            fsessionstorage.value+=sessionStorage.key(i)+" = "+sessionStorage.getItem(sessionStorage.key(i))+"\n";
+        }
+    }
+    }
+
+    function limpiar(){
+        fsessionstorage.value="";
+        flocalstorage.value="";
+        fclave.value="";
+        fvalor.value="";
+    }
+
+    function refrescar(){
+        reloadContents();
+        mostrarMensaje("Se ha cargado correctamente");
+    }
+
+    function comprobar(){
+        if(window.localStorage&&window.sessionStorage){
+            mostrarMensaje("Tu navegador es compatible con el objeto storage");
+        }else{
+            mostrarMensaje("Tu navegador no es compatible con el objeto storage");
+        }
+    }
+</script>
 </html>

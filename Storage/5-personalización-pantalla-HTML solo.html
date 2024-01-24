@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personalización Pantalla</title>
+    <title>Personalizaciï¿½n Pantalla</title>
 </head>
 <body> 
-<p>Puede elegir el color de fondo que desea para visualizar nuestra página Web </p><br>
+<p>Puede elegir el color de fondo que desea para visualizar nuestra pï¿½gina Web </p><br>
 <select name="fondocolor">
   <option value='red'>Rojo</option>
   <option value='blue'>Azul</option>
@@ -24,5 +24,34 @@
  </select>
  <br/><br/>
 <button type='button'>Reestablece los colores por defecto</button>
+<script>
+  //variables
+  let fondocolor=document.getElementsByTagName("select")[0];
+  let fuentecolor=document.getElementsByTagName("select")[1];
+  let boton=document.getElementsByTagName("button")[0];
+
+  document.addEventListener("DOMContentLoaded",inicio,false);
+
+  function inicio(){
+    fondocolor.addEventListener("change",()=>{
+      localStorage.fondo=fondocolor.value;
+    },true);
+    fuentecolor.addEventListener("change",()=>{
+      localStorage.fuente=fuentecolor.value;
+    },true);
+    boton.addEventListener("click",reestablecer,true);
+
+    document.body.style.backgroundColor=localStorage.fondo;
+    document.body.style.color=localStorage.fuente;
+  }
+
+  function reestablecer(){
+    document.body.style.backgroundColor='white';
+    document.body.style.color='black';
+  }
+
+
+
+</script>
 </body>
 </html>

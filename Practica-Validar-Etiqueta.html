@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar Etiqueta</title>
+</head>
+<body>
+    <h1>Productos</h1>
+    <input type="text" placeholder="nombre producto"><br>
+    <input type="text" placeholder="referencia"><br>
+    <input type="button" onclick="anadir()" value="validar"><br>
+    <textarea id="info"></textarea>
+
+
+    <script>
+        //Variable Documentos
+        let fnombre=document.getElementsByTagName("input")[0];
+        let fref=document.getElementsByTagName("input")[1];
+        
+
+        function anadir(){
+            let regex=/^[0-9]{4}-(?=[a-z]*[A-Z])(?=[A-Z]*[a-z])[a-zA-Z]{5}\/[0-9]{2}_[0-9]$/;
+
+            class Etiqueta{
+                constructor(nom,ref){
+                    this.nombre=nom;
+                    this.referencia=ref;
+                }
+
+                mostrarArticulo(){
+                    document.getElementById("info").value=this.nombre+" | "+this.referencia;
+                }   
+
+                validarEtiqueta(){
+                     if (!regex.test(this.referencia)){
+                        document.getElementById("info").value+= " | "+" Referencia no valida";
+                     }else{
+                        document.getElementById("info").value+= " | "+" Referencia valida";
+                     }
+                }
+            }
+            
+        let prod=new Etiqueta(fnombre.value,fref.value);
+
+        prod.mostrarArticulo();
+        prod.validarEtiqueta();
+        }
+
+    </script>
+</body>
+</html>

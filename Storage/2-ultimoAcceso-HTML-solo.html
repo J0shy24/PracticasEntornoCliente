@@ -19,6 +19,28 @@
 	<div id="mensaje">
 		
 	</div>
-	
+	<script>
+		//Element variables
+		let fnom=document.getElementById("nom");
+		let fapellido=document.getElementsByName("apellido")[0];
+		let boton=document.getElementsByTagName("input")[2];
+
+		function inicio(){
+			boton.addEventListener("click",mostrar,true);
+		}
+
+		function mostrar(){
+			if(localStorage.getItem(fnom.value)==null){
+				let fecha=new Date();
+				localStorage.setItem(fnom.value,fnom.value);
+				localStorage.setItem("date",fecha.toString());
+				document.body.innerHTML="Hola"+fnom.value;
+			}else{
+				let fecha=localStorage.getItem("date");
+				document.body.innerHTML="Hola"+fnom.value+" Tu ultimo acceso es el :"+fecha;
+			}
+		}
+		document.addEventListener("DOMContentLoaded",inicio,false);
+	</script>
 </body>
 </html>

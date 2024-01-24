@@ -32,6 +32,34 @@ span#mensajes {
 		<td><input type="button" name="Mostrar" value="Mostrar"/></td>
 	</tr>
 </table>
+<script>
+	let bEnvio=document.getElementsByName("Envio")[0];
+	let bMostrar=document.getElementsByName("Mostrar")[0];
+	let fusuario=document.getElementsByName("user")[0];
+	let fcontrasena=document.getElementsByName("user")[1];
 
+	function setEvents(){
+		bEnvio.addEventListener("click",envio,true);
+		bMostrar.addEventListener("click",mostrar,true);
+	}
+
+	function envio(){
+		if (fusuario.value==""||fcontrasena.value==""){
+			alert("Rellena los Campos");
+			return null;
+		}
+
+		localStorage.setItem("usuario",fusuario.value);
+		localStorage.setItem("password",fcontrasena.value);
+	}
+
+	function mostrar(){
+		let user=localStorage.getItem("usuario");
+		let pass=localStorage.getItem("password");
+		let html="<p>Usuario: "+user+" Contraseña: "+pass+"</p>"
+		document.body.insertAdjacentHTML("beforeend",html);
+	}
+	document.addEventListener("DOMContentLoaded",setEvents,false);
+</script>
 </body>
 </html>
