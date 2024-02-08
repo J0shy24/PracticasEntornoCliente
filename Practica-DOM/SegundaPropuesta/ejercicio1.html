@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eje1</title>
+</head>
+<script>
+
+    document.addEventListener('readystatechange',inicio,false);
+
+    function inicio(){
+        const rows=5;
+        const cols=5;
+        if(document.readyState=="complete"){
+            //table
+        let table=document.createElement('table');
+        table.setAttribute("style","border:1px solid black");
+        table.setAttribute("id","table");
+        document.body.appendChild(table);
+        table=document.getElementById("table");
+   
+       
+        for(let i=0;i<rows;i++){
+                 //tr
+            let tr=document.createElement('tr');
+            tr.setAttribute("style","border:1px solid black")
+            table.appendChild(tr);
+            for(let y=0;y<cols;y++){
+                 //td
+                let td=document.createElement('td');
+                td.setAttribute("style","border:1px solid black");
+                td.style.backgroundColor="blue";
+                td.style.height="10px";
+                td.style.width="10px";
+                tr.appendChild(td);
+                td.addEventListener("click",cambiarColor,true);
+            }
+        }
+        }
+    }
+
+    function cambiarColor(e){
+        let celda=e.target;
+        if(celda.style.backgroundColor=="red"){
+        celda.style.backgroundColor="blue";
+        }else{
+            celda.style.backgroundColor="red";
+        }
+       
+    }
+</script>
+<body>
+    
+</body>
+</html>
