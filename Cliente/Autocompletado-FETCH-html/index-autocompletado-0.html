@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocompletado</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        let respuestaFetch;
+        let fetchText;
+        let entry;
+        let resultado;
+        
+        document.addEventListener("DOMContentLoaded",inicializar,false);
+
+        function inicializar(){
+            entry=document.getElementsByTagName("input")[0];
+            resultado=document.getElementById("resultado");
+            entry.addEventListener("keyup",enviarPeticion,true);
+        }
+
+        async function enviarPeticion(e){
+            if(entry.value!=""){
+                respuestaFetch= await fetch("datos.php",{
+                    method:"POST",
+                    headers:{"Content-type":"application/x-www-form-urlencoded"},
+                    body:'q='+entry.value
+                });
+
+                fetchText= await respuestaFetch.text();
+
+                if(respuestaFetch.status==200){
+                    resultado.innerHTML=fetchText;
+                }else{
+                    console.log("Error");
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header class="text-center">
+            <h1>Segundo Ejercicio</h1>
+            <hr/>
+            <p class="lead">Autocompletado de un campo</p>
+        </header>
+        <div class="col-lg-6" style="margin-bottom:50px;">
+            <form class="form">
+                Buscar por nombre: <input type="text" name="q">
+            </form>
+            <br/>
+            <br/>
+            <b>Resultados</b>
+            <br/>
+            <br/>
+            <span id="resultado"></span>
+        </div> 
+        <footer class="col-lg-12 text-center">
+            EXPERIMENTANDO CON FETCH
+        </footer>
+    </div>
+ 
+</body>
+</html>

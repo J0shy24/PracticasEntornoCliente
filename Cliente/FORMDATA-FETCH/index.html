@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usando FormData con FETCH</title>
+
+		<style>
+		</style>
+		<script>
+			let respuesta;
+			var alumno;
+			var materia;
+			var calificacion;
+			var datos;
+			async function enviarPeticionFETCH(evento) {
+				if (alumno.value !='' && materia.value != ''){					
+					datos = new FormData(document.forms[0]);
+					alumno.disabled = true;
+					materia.disabled = true;						
+					datos.append('curso','20/21');
+						respuesta = await fetch('ajax.php',{
+								method: 'POST',								
+								body: datos
+							}
+						);
+						if (respuesta.status==200){					
+							console.log('dentro');
+							alumno.disabled = false;
+							materia.disabled = false;
+							let datorespondido=await respuesta.text();
+							console.dir(datorespondido);
+							calificacion.value=datorespondido;
+                    
+                		}
+				}	
+
+			}
+			
+			document.addEventListener('readystatechange', inicializar, false);
+			function inicializar() {
+				if (document.readyState == 'complete') {
+					alumno = document.getElementById('alumno');
+					materia = document.getElementById('materia');
+					calificacion = document.getElementById('calificacion');
+					alumno.addEventListener('change', enviarPeticionFETCH, false);
+					materia.addEventListener('change', enviarPeticionFETCH, false);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<form id='formulario'>
+			<label for='alumno'>Alumno: </label>
+			<select id='alumno' name='alumnoF'>
+				<option value='' selected='selected'>--Elija un alumno--</option>
+				<option>Albert Einstein</option>
+				<option>Marie Courie</option>
+			</select>
+			<label for='materia'>Materia: </label>
+			<select id='materia' name='materiaF'>
+				<option value='' selected='selected'>--Elija una materia--</option>
+				<option>Lenguaje</option>
+				<option>Matemàticas</option>
+			</select>
+			<label for='calificacion'>Calificaci&oacute;n: </label>
+			<input type='text' readonly='readonly' id='calificacion'/>
+		</form>
+	</body>
+</html>

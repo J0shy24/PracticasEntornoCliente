@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head><meta charset='UTF-8'/>
+		<title>AJAX</title>
+		<style>
+		</style>
+		<script>
+			var alumno;
+			var materia;
+			var calificacion;
+			document.addEventListener('readystatechange', inicializar, false);
+			function inicializar() {
+				if (document.readyState == 'complete') {
+					alumno = document.getElementById('alumno');
+					materia = document.getElementById('materia');
+					calificacion = document.getElementById('calificacion');
+					alumno.addEventListener('change', enviopeticion, false);
+					materia.addEventListener('change', enviopeticion, false);
+					calificacion.value="";
+				}
+			}
+			async function enviopeticion(){
+				const respuesta=await fetch('Fetch-post.php',{
+					method:'POST',
+					headers: {
+    					"Content-Type": "application/x-www-form-urlencoded"
+  					},
+					body:'alumno=' + alumno.value + '&materia=' + materia.value 
+				});
+				
+				if (respuesta.status == 200){
+					const datos=await respuesta.text();
+					console.log(datos);
+					calificacion.value=datos;
+  				}else{
+    				throw new Error("WARN",respuesta.status);
+  				}
+			}
+						
+		</script>
+	</head>
+	<body>
+		<label for='alumno'>Alumno: </label>
+		<select id='alumno'>
+			<option value='' selected='selected'>--Elija un alumno--</option>
+			<option>Albert Einstein</option>
+			<option>Marie Courie</option>
+		</select>
+		<label for='materia'>Materia: </label>
+		<select id='materia'>
+			<option value='' selected='selected'>--Elija una materia--</option>
+			<option>Lenguaje</option>
+			<option>Matemàticas</option>
+		</select>
+		<label for='calificacion'>Calificaci&oacute;n: </label>
+		<input type='text' readonly='readonly' id='calificacion'/>
+	</body>
+</html>

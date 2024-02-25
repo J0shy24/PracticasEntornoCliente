@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocompletado</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+	var respuesta1rapromise;
+    var datos2dapromise;
+	var casos;
+	var entrada;
+   	document.addEventListener("DOMContentLoaded",inicializar,true);
+	function inicializar(){
+		entrada=document.getElementsByTagName("input")[0];
+		entrada.addEventListener("keyup",enviarpeticionFETCH,true);
+		casos=document.getElementById("resultado");
+	}
+//SOLUCIÓN DEL EJERCICIO CON POST
+	async function enviarpeticionFETCH(e){
+		//alert("dentro");
+		if (entrada.value != ""){
+			respuesta1rapromise=await fetch("datos.php",{
+                method: "POST",
+                headers:{
+                    "Content-Type":"application/x-www-form-urlencoded"
+                },
+                body: "q="+entrada.value
+            })
+			datos2dapromise=await respuesta1rapromise.text();
+            if (respuesta1rapromise.status==200){
+                casos.innerHTML=datos2dapromise;
+            }
+            else{
+                console.log("ERROR!!!")
+            }
+            			
+			//¡¡OJO!! el identificador de la variable debe coincidir con el identificador de $_REQUEST["q"]
+            //O  $_REQUEST["buscador"]. Depende del identificador reflejado en el php.
+		}
+	}
+
+
+/*//SOLUCIÓN DEL EJERCICIO CON GET
+    async function enviarpeticionFETCH(e){
+		//alert("dentro");
+		if (entrada.value != ""){
+			respuesta1rapromise=await fetch('datos.php?q='+entrada.value,{
+                method: "GET"                
+            })
+			datos2dapromise=await respuesta1rapromise.text();
+            if (respuesta1rapromise.status==200){
+                casos.innerHTML=datos2dapromise;
+            }
+            else{
+                console.log("ERROR!!!")
+            }
+            			
+			//¡¡OJO!! el identificador de la variable debe coincidir con el identificador de $_REQUEST["q"]
+            //O  $_REQUEST["buscador"]. Depende del identificador reflejado en el php.
+		}
+	}
+       */ 
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header class="text-center">
+            <h1>Segundo Ejercicio</h1>
+            <hr/>
+            <p class="lead">Autocompletado de un campo</p>
+        </header>
+        <div class="col-lg-6" style="margin-bottom:50px;">
+            <form class="form">
+                Buscar por nombre: <input type="text">
+            </form>
+            <br/>
+            <br/>
+            <b>Resultados</b>
+            <br/>
+            <br/>
+            <span id="resultado"></span>
+        </div> 
+        <footer class="col-lg-12 text-center">
+            EXPERIMENTANDO CON FETCH
+        </footer>
+    </div>
+</body>
+</html>
