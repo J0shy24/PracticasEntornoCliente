@@ -25,12 +25,15 @@
 
         const url='./media.php';
 
-        fetch(url,options).then(  response => response.json() )
-        .then(data=>{
-            console.log(data);
-            const resultadoDiv=document.getElementById('resultado');
-            resultadoDiv.innerHTML=`<h3>Media: ${data.media}</h3><div>${data.html}</div>`;
-        }).catch(error=>cosole.error('error al solicitar',error));
+       async function fetchJSON(){
+            const fetchedData= await fetch(url,options);
+            const fetchedJSON= await fetchedData.json();
+
+            console.log(fetchedJSON);
+
+            document.getElementById("resultado").innerHTML='<h3>Media:'+fetchedJSON.media+'</h3><div>'+fetchedJSON.html+'</div>'
+       }
+       fetchJSON();
     </script>
 </body>
 </html>
